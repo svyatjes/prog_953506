@@ -3,7 +3,7 @@
 #include <malloc.h>
 #include <stdlib.h>
 
-typedef struct service 
+typedef struct service
 {
     int serviceTime;
     int number;
@@ -11,7 +11,7 @@ typedef struct service
     struct service* prev;
 } Service;
 
-void AddService(Service* serv, int number) 
+void AddService(Service* serv, int number)
 {
     Service* p = (Service*)malloc(sizeof(Service));
     p->serviceTime = rand() % 100;
@@ -21,19 +21,19 @@ void AddService(Service* serv, int number)
     serv->next = p;
 }
 
-void BubbleSort(Service* serv) 
+void BubbleSort(Service* serv)
 {
     Service* temp = serv;
     Service* tempNext = temp->next;
     int tr = 1;
-    while (tr) 
+    while (tr)
     {
         tr = 0;
 
-        while (serv->next) 
+        while (serv->next)
         {
 
-            if (serv->serviceTime > tempNext->serviceTime) 
+            if (serv->serviceTime > tempNext->serviceTime)
             {
                 tr = 1;
                 int tempST = serv->serviceTime;
@@ -48,7 +48,7 @@ void BubbleSort(Service* serv)
             tempNext = serv->next;
         }
 
-        while (serv->prev) 
+        while (serv->prev)
         {
             serv = serv->prev;
         }
@@ -72,7 +72,7 @@ int main()
     scanf_s("%d", &numberOfStructures);
     printf("max. time=");
     scanf_s("%d", &maxSum);
-    for (int i = 1; i < numberOfStructures; i++) 
+    for (int i = 1; i < numberOfStructures; i++)
     {
 
         AddService(serv, i);
@@ -80,7 +80,7 @@ int main()
     }
     serv = first;
 
-    while (serv) 
+    while (serv)
     {
         printf("%d:%d  ", serv->number, serv->serviceTime);
         serv = serv->next;
@@ -91,7 +91,7 @@ int main()
     BubbleSort(serv);
     serv = first;
 
-    while (serv) 
+    while (serv)
     {
         printf("%d:%d  ", serv->number, serv->serviceTime);
         serv = serv->next;
@@ -100,18 +100,21 @@ int main()
     serv = first;
     int servSum = 0;
     printf("\n");
-    while (serv) 
+    while (serv)
     {
         servSum += serv->serviceTime;
-        if (servSum < maxSum) 
+        if (servSum < maxSum)
         {
             printf("Number: %d\n", serv->number);
         }
-        else 
+        else
         {
             break;
         }
         serv = serv->next;
     }
+
+    //очищаем память с под динамической структуры
+    free(serv);
     return 0;
 }
